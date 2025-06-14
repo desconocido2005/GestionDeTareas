@@ -1,0 +1,65 @@
+<div class="p-8 min-h-screen bg-gradient-to-br from-gray-100 via-white to-gray-200 font-sans relative" >
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold text-gray-800 tracking-tight">Tareas Pendientes</h1>
+        <button (click)="openCreateForm()"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl shadow transition duration-200">
+            Crear Tarea
+        </button>
+    </div>
+
+    <!-- Tabla -->
+    <div class="overflow-hidden rounded-2xl shadow-lg bg-white">
+        <table class="min-w-full divide-y divide-gray-200 border border-collapse border-gray-200">
+            <thead class="bg-gray-100 text-gray-700 text-sm uppercase">
+                <tr>
+                    <th class="px-6 py-3 text-left font-medium">Título</th>
+                    <th class="px-6 py-3 text-left font-medium">Descripción</th>
+                    <th class="px-6 py-3 text-left font-medium">Estado</th>
+                    <th class="px-6 py-3 text-left font-medium">Prioridad</th>
+                    <th class="px-6 py-3 text-left font-medium">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-gray-800">
+                <tr *ngFor="let item of tarea" class="hover:bg-gray-50 transition">
+                    <td class="px-6 py-4">{{ item.titulo }}</td>
+                    <td class="px-6 py-4">{{ item.descripcion }}</td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold" [ngClass]="{
+                'bg-green-100 text-green-700': item.estado === 'Completado',
+                'bg-yellow-100 text-yellow-700': item.estado === 'Pendiente'
+                }">
+                            {{ item.estado }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-2 py-1 rounded-full text-xs font-semibold" [ngClass]="{
+  'bg-red-100 text-red-700': item.prioridad?.toLowerCase() === 'alto' || item.prioridad?.toLowerCase() === 'alta',
+  'bg-orange-100 text-orange-700': item.prioridad?.toLowerCase() === 'medio',
+  'bg-green-100 text-green-700': item.prioridad?.toLowerCase() === 'bajo'
+                }">
+                            {{ item.prioridad }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 space-x-2">
+                        <button (click)="edit(item)"
+                            class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded-lg shadow text-sm">
+                            Editar
+                        </button>
+                        <button (click)="markAsCompleted(item)"
+                            class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg shadow text-sm">
+                            Completado
+                        </button>
+                        <button (click)="markAsPending(item)"
+                            class="bg-red-200 hover:bg-red-300 text-white px-3 py-1 rounded-lg shadow text-sm">
+                            Pendiente
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px]">
+        <app-tareas-form *ngIf="showForm" [hidden]="!showForm"(save)="getAllTareas()" (update)="getAllTareas()" (cancel)="onCancel()"> </app-tareas-form>
+    </div>
+</div>

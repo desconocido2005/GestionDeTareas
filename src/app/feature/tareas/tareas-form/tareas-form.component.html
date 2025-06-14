@@ -1,0 +1,36 @@
+<form class="max-w-lg mx-auto p-8 bg-white rounded-2xl shadow-lg" (ngSubmit) = "saveTarea()">
+    <h2 class="text-2xl font-bold mb-6 text-gray-800">Crear / Editar Tarea</h2>
+
+    <!-- Título -->
+    <div class="mb-5">
+        <label for="titulo" class="block text-gray-700 font-semibold mb-2">Título</label>
+        <input type="text" id="titulo" name="titulo" placeholder="Escribe el título" [(ngModel)]="tareas.titulo"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition" />
+    </div>
+
+    <!-- Descripción -->
+    <div class="mb-5">
+        <label for="descripcion" class="block text-gray-700 font-semibold mb-2">Descripción</label>
+        <textarea id="descripcion" name="descripcion" placeholder="Escribe la descripción" rows="4" [(ngModel)]="tareas.descripcion"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition resize-none"></textarea>
+    </div>
+
+    <!-- Prioridad -->
+    <div class="mb-6">
+        <label for="prioridad" class="block text-gray-700 font-semibold mb-2">Prioridad</label>
+        <select id="prioridad" name="prioridad" [(ngModel)]="tareas.prioridad"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+            <option *ngFor="let item of prioridades" [value]= "item">{{item}}</option>
+        </select>
+    </div>
+
+    <!-- Botón -->
+    <button type="submit"
+    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 mb-[20px] rounded-xl shadow transition">
+        {{ isEditing ? 'Actualizar' : 'Guardar Tarea' }}
+    </button>
+    <button type="button" (click)="cancelForm()"
+    class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-3 rounded-xl shadow transition">
+    Cancelar
+    </button>
+</form>
